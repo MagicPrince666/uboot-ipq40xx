@@ -76,7 +76,7 @@
 #define CONFIG_BAUDRATE			115200
 #define CONFIG_SYS_BAUDRATE_TABLE	{4800, 9600, 19200, 38400, 57600,\
 								115200}
-#define V_PROMPT			"(IPQ40xx) # "
+#define V_PROMPT			"xag # "
 #define CONFIG_SYS_PROMPT		V_PROMPT
 #define CONFIG_SYS_CBSIZE		(256 * 2) /* Console I/O Buffer Size */
 #define CONFIG_SYS_MAXARGS		16
@@ -270,8 +270,8 @@ typedef struct {
 #define CONFIG_QCA8033_PHY	1
 #define CONFIG_MII
 #define CONFIG_CMD_MII
-#define CONFIG_IPADDR	192.168.1.1
-#define CONFIG_SERVERIP 192.168.1.2
+#define CONFIG_IPADDR	192.168.1.2
+#define CONFIG_SERVERIP 192.168.1.10
 #define CONFIG_IPQ_NO_MACS	2
 /*
  * CRASH DUMP ENABLE
