@@ -313,7 +313,7 @@ typedef struct {
 #define CONFIG_RBTREE		/* for ubi */
 #define CONFIG_CMD_UBI
 #define CONFIG_BOOTCOMMAND	"bootipq"
-#define CONFIG_BOOTDELAY	2
+#define CONFIG_BOOTDELAY	1
 #define CONFIG_IPQ_FDT_HIGH	0x87000000
 
 #define CONFIG_UBOOT_START 			0xf0000
@@ -327,7 +327,7 @@ typedef struct {
 #define CONFIG_UBOOT_NAME "openwrt-ipq40xx-u-boot-stripped.elf"
 #define CONFIG_FIRMWARE "firmware.bin"
 #define CONFIG_BOOTSTOPKEY	"gl"
-#define CONFIG_VERSION	"20180419"
+#define CONFIG_VERSION	"20190719"
 
 //#define CONFIG_DEBUG
 
