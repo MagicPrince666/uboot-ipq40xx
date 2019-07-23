@@ -2,7 +2,7 @@ export BUILD_TOPDIR=$(PWD)
 export STAGING_DIR=/home/wdc/ipq40xx/openwrt-sdk-ipq806x/staging_dir
 export TOOLPATH=$(STAGING_DIR)/toolchain-arm_cortex-a7_gcc-4.8-linaro_uClibc-1.0.14_eabi
 export PATH:=$(TOOLPATH)/bin:${PATH}
-export MAKECMD=make --silent ARCH=arm CROSS_COMPILE=arm-openwrt-linux-
+export MAKECMD=make --silent ARCH=arm CROSS_COMPILE=arm-openwrt-linux-uclibcgnueabi-
 
 
 # boot delay (time to autostart boot command)
@@ -18,7 +18,7 @@ ipq40xx:
 	@mkdir -p $(BUILD_TOPDIR)/bin
 	@cd $(BUILD_TOPDIR)/uboot/ && $(MAKECMD) ipq40xx_cdp_config
 	@cd $(BUILD_TOPDIR)/uboot/ && $(MAKECMD) ENDIANNESS=-EB V=1 all
-	@cp $(BUILD_TOPDIR)/uboot/u-boot.bin $(BUILD_TOPDIR)/bin/temp.bin
+	@cp $(BUILD_TOPDIR)/uboot/u-boot.bin $(BUILD_TOPDIR)/bin/xag-$(UBOOT_FILE_NAME).bin
 	@cp $(BUILD_TOPDIR)/uboot/u-boot $(BUILD_TOPDIR)/bin/openwrt-ipq40xx-u-boot-stripped.elf
 	#@make show_size
 	@make stripped
@@ -28,8 +28,8 @@ show_size:
 	@echo -e "\n======= Preparing $(MAX_UBOOT_SIZE)KB file filled with 0xFF... ======="
 	@`tr "\000" "\377" < /dev/zero | dd ibs=1k count=$(MAX_UBOOT_SIZE) of=$(BUILD_TOPDIR)/bin/$(UBOOT_FILE_NAME).bin`
 	@echo -e "\n======= Copying U-Boot image... ======="
-	@`dd if=$(BUILD_TOPDIR)/bin/temp.bin of=$(BUILD_TOPDIR)/bin/$(UBOOT_FILE_NAME).bin conv=notrunc`
-	@`rm $(BUILD_TOPDIR)/bin/temp.bin`
+	@`dd if=$(BUILD_TOPDIR)/bin/xag-$(UBOOT_FILE_NAME).bin of=$(BUILD_TOPDIR)/bin/$(UBOOT_FILE_NAME).bin conv=notrunc`
+	@`rm $(BUILD_TOPDIR)/bin/xag-$(UBOOT_FILE_NAME).bin`
 	@echo -e "\n======= U-Boot image ready, size:" `wc -c < $(BUILD_TOPDIR)/bin/$(UBOOT_FILE_NAME).bin`" bytes =======\n"
 	@`md5sum $(BUILD_TOPDIR)/bin/$(UBOOT_FILE_NAME).bin | awk '{print $$1}' | tr -d '\n' > $(BUILD_TOPDIR)/bin/$(UBOOT_FILE_NAME).md5`
 	@`echo ' *'$(UBOOT_FILE_NAME).bin >> $(BUILD_TOPDIR)/bin/$(UBOOT_FILE_NAME).md5`
