@@ -54,7 +54,7 @@ int do_http_upgrade( const ulong size, const int upgrade_type )
 	if ( upgrade_type == WEBFAILSAFE_UPGRADE_TYPE_UBOOT ) {
 		printf( "\n\n****************************\n*     U-BOOT UPGRADING     *\n* DO NOT POWER OFF DEVICE! *\n****************************\n\n" );
 
-		sprintf(cmd, "sf probe && sf erase 0x%x 0x%x && sf write 0x84000000 0x%x 0x%x", 
+		sprintf(cmd, "sf probe && sf erase 0x%x 0x%x && sf write 0x84000000 0x%x 0x%lx", 
 			CONFIG_UBOOT_START, CONFIG_UBOOT_SIZE, CONFIG_UBOOT_START, size);
 
 		return run_command(cmd, 0);
@@ -64,7 +64,7 @@ int do_http_upgrade( const ulong size, const int upgrade_type )
 		printf( "\n\n****************************\n*    FIRMWARE UPGRADING    *\n* DO NOT POWER OFF DEVICE! *\n****************************\n\n" );
 
 		if ( do_checkout_firmware(NULL, 0, 0, NULL) ) {
-			sprintf(cmd, "sf probe && sf erase 0x%x 0x%x && sf write 0x84000000 0x%x 0x%x",
+			sprintf(cmd, "sf probe && sf erase 0x%x 0x%x && sf write 0x84000000 0x%x 0x%lx",
 				CONFIG_FIRMWARE_START, CONFIG_FIRMWARE_SIZE, CONFIG_FIRMWARE_START, size);
 		} else {
 			sprintf(cmd, "sf probe && imgaddr=0x84000000 && source $imgaddr:script");
