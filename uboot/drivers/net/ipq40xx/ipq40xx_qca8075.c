@@ -726,12 +726,16 @@ int ipq40xx_qca8075_phy_init(struct ipq40xx_eth_dev *info)
 	qca8075_ops->phy_get_speed = qca8075_phy_get_speed;
 	qca8075_ops->phy_get_duplex = qca8075_phy_get_duplex;
 	info->ops = qca8075_ops;
+	printf("xag get speed %x\n",qca8075_ops->phy_get_speed);
 
 	qca8075_id = phy_data = qca8075_phy_reg_read(0x0, 0x0, QCA8075_PHY_ID1);
-	printf ("PHY ID1: 0x%x\n", phy_data);
+	printf ("XAG PHY ID1: 0x%x\n", phy_data);
 	phy_data = qca8075_phy_reg_read(0x0, 0x0, QCA8075_PHY_ID2);
-	printf ("PHY ID2: 0x%x\n", phy_data);
+	printf ("XAG PHY ID2: 0x%x\n", phy_data);
 	qca8075_id = (qca8075_id << 16) | phy_data;
+
+	if(qca8075_id == 0xFFFFFFFF)
+		qca8075_id = 0x4dd0b1;
 
 	if (qca8075_id == QCA8075_PHY_V1_0_5P) {
 		phy_data = qca8075_phy_mmd_read(0, PSGMII_ID,
