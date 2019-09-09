@@ -115,6 +115,11 @@
 /* prince config */
 #define CONFIG_SPL_YMODEM_SUPPORT
 //#define CONFIG_SERIAL_MULTI
+#define CONFIG_CMD_LOADB
+#define CONFIG_CMD_ITEST
+#define CONFIG_CMD_IMI
+#define CONFIG_CMD_SETEXPR
+//#define CONFIG_CMD_LOADS
 
 #ifndef __ASSEMBLY__
 #include <compiler.h>
