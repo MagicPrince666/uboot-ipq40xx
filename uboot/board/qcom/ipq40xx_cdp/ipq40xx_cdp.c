@@ -85,7 +85,9 @@ extern int qpic_nand_init(struct qpic_nand_init_config *config);
 extern void nand_env_relocate_spec(void);
 extern int ipq40xx_edma_init(ipq40xx_edma_board_cfg_t *edma_cfg);
 extern int ipq40xx_qca8075_phy_init(struct ipq40xx_eth_dev *cfg);
+#if CONFIG_QCA8033_PHY
 extern int ipq40xx_qca8033_phy_init(struct ipq40xx_eth_dev *cfg);
+#endif
 extern void ipq40xx_register_switch(
 	int (*sw_init)(struct ipq40xx_eth_dev *cfg));
 extern int mmc_env_init(void);
@@ -590,6 +592,7 @@ int board_eth_init(bd_t *bis)
 	if (gpio) {
 		qca_configure_gpio(gpio, gboard_param->sw_gpio_count);
 	}
+	printf("XAG machid:0x%x\n", gboard_param->machid);
 	switch (gboard_param->machid) {
 	case MACH_TYPE_IPQ40XX_AP_DK01_1_S1:
 	case MACH_TYPE_IPQ40XX_AP_DK01_1_C2:
@@ -638,7 +641,10 @@ int board_eth_init(bd_t *bis)
 		if (gpio) {
 			qca_configure_gpio(gpio, gboard_param->rgmii_gpio_count);
 		}
+		ipq40xx_register_switch(ipq40xx_qca8075_phy_init);
+#if CONFIG_QCA8033_PHY
 		ipq40xx_register_switch(ipq40xx_qca8033_phy_init);
+#endif
 		break;
 	default:
 		break;
