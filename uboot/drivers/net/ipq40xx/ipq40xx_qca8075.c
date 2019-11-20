@@ -728,11 +728,14 @@ int ipq40xx_qca8075_phy_init(struct ipq40xx_eth_dev *info)
 	info->ops = qca8075_ops;
 	printf("xag get speed %x\n",qca8075_ops->phy_get_speed);
 
-	qca8075_id = phy_data = qca8075_phy_reg_read(0x0, 0x0, QCA8075_PHY_ID1);
-	printf ("XAG PHY ID1: 0x%x\n", phy_data);
-	phy_data = qca8075_phy_reg_read(0x0, 0x0, QCA8075_PHY_ID2);
-	printf ("XAG PHY ID2: 0x%x\n", phy_data);
-	qca8075_id = (qca8075_id << 16) | phy_data;
+	for(phy_id = 0; phy_id < 5; phy_id++){
+		qca8075_id = phy_data = qca8075_phy_reg_read(0x0, phy_id, QCA8075_PHY_ID1);
+		printf ("XAG PHY ID1(%d): 0x%x\n", phy_id, phy_data);
+		phy_data = qca8075_phy_reg_read(0x0, phy_id, QCA8075_PHY_ID2);
+		printf ("XAG PHY ID2(%d): 0x%x\n", phy_id, phy_data);
+		qca8075_id = (qca8075_id << 16) | phy_data;
+		if(qca8075_id != -1) break;
+	}
 
 	if(qca8075_id == 0xFFFFFFFF)
 		qca8075_id = 0x4dd0b1;

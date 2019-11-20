@@ -616,6 +616,7 @@ int board_eth_init(bd_t *bis)
 	 case MACH_TYPE_IPQ40XX_AP_DK04_1_C1:
 	 	printf("xag init qca8075 phy\n");
 	 	mdelay(1);
+		writel(GPIO_OUT, GPIO_IN_OUT_ADDR(36));
 		writel(GPIO_OUT, GPIO_IN_OUT_ADDR(40));
 		ipq40xx_register_switch(ipq40xx_qca8075_phy_init);
 		break;
